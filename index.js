@@ -4,6 +4,6 @@ const translateFrames = require('./lib/translate-frames')
 
 module.exports = function(rawStack, opts) {
   return Promise.resolve(parseStack(rawStack))
-    .then(fetchSourcemaps)
-    .then(translateFrames)
+    .then(stack => fetchSourcemaps(stack, opts))
+    .then(stack => translateFrames(stack, opts))
 }
