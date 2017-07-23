@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/sebastianseilund/stack2source#readme",
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "source-map": "^0.5.6"
   }
 }
