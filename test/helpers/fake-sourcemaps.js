@@ -40,7 +40,7 @@ function setupJs(file, sourcemap) {
   if (sourcemap) {
     body += `\n\n//# ${key}=${host}/${sourcemap}`
   }
-  nock(host).get(`/${file}`).reply(200, body)
+  nock(host).persist().get(`/${file}`).reply(200, body)
 }
 
 function setupSourcemap(file, mappings) {
@@ -56,11 +56,11 @@ function setupSourcemap(file, mappings) {
     })
   })
   const body = map.toString()
-  nock(host).get(`/${file}.map`).reply(200, body)
+  nock(host).persist().get(`/${file}.map`).reply(200, body)
 }
 
 function setup404(file) {
-  nock(host).get(`/${file}`).reply(404, 'Not Found')
+  nock(host).persist().get(`/${file}`).reply(404, 'Not Found')
 }
 
 module.exports = {
