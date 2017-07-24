@@ -7,16 +7,6 @@ globals:
   require: true
   Promise: true
 rules:
-#   array-bracket-spacing:
-#   - 2
-#   - never
-#   no-console: 0
-#   object-curly-spacing:
-#   - 2
-#   - never
   quotes:
   - 2
   - single
-#   semi:
-#   - 2
-#   - never

@@ -30,6 +30,7 @@
   "devDependencies": {
     "ava": "^0.21.0",
     "eslint": "^4.3.0",
+    "nock": "^9.0.14",
     "prettier": "^1.5.3",
     "prettier-eslint": "^6.4.2"
   }
