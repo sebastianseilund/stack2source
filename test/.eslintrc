@@ -1,0 +1,4 @@
+extends: ../.eslintrc
+parserOptions:
+  sourceType: module
+  ecmaVersion: 2017
