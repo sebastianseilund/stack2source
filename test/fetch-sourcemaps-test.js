@@ -56,3 +56,5 @@ test(
 )
 
 test('js is not absolute', macro, '/not/an/absolute/url.js', 'js-not-http')
+
+test('js is empty string', macro, '', 'js-not-http')
