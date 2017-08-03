@@ -3,6 +3,7 @@ import StackFrame from '../lib/stack-frame'
 
 test('getters gives source precedence', t => {
   const frame = Object.assign(new StackFrame(), {
+    parseStatus: 'ok',
     targetName: 'xyz',
     sourceName: 'getSomething',
     targetUrl: 'https://example.com/vendor.min.js',
@@ -20,6 +21,7 @@ test('getters gives source precedence', t => {
 
 test('getters falls back to target, when source is not set', t => {
   const frame = Object.assign(new StackFrame(), {
+    parseStatus: 'ok',
     targetName: 'xyz',
     targetUrl: 'https://example.com/vendor.min.js',
     sourceUrl: 'https://example.com/vendor.js',
@@ -34,6 +36,7 @@ test('getters falls back to target, when source is not set', t => {
 
 test('toString() for anonymous', t => {
   const frame = Object.assign(new StackFrame(), {
+    parseStatus: 'ok',
     targetUrl: 'https://example.com/vendor.js',
     targetLine: 42,
     targetCol: 1
@@ -43,6 +46,7 @@ test('toString() for anonymous', t => {
 
 test('toString() for named', t => {
   const frame = Object.assign(new StackFrame(), {
+    parseStatus: 'ok',
     targetName: 'myFunction',
     targetUrl: 'https://example.com/vendor.js',
     targetLine: 42,
@@ -52,4 +56,12 @@ test('toString() for named', t => {
     frame.toString(),
     '    at myFunction (https://example.com/vendor.js:42:1)'
   )
+})
+
+test('toString() for raw', t => {
+  const frame = Object.assign(new StackFrame(), {
+    parseStatus: 'failed',
+    raw: 'very weird frame'
+  })
+  t.is(frame.toString(), 'very weird frame')
 })

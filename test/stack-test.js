@@ -7,12 +7,14 @@ test('toString()', t => {
     message: 'Something funky happened',
     frames: [
       Object.assign(new StackFrame(), {
+        parseStatus: 'ok',
         targetName: 'myFunction',
         targetUrl: 'https://example.com/vendor.js',
         targetLine: 42,
         targetCol: 1
       }),
       Object.assign(new StackFrame(), {
+        parseStatus: 'ok',
         targetUrl: 'https://example.com/app.js',
         targetLine: 765,
         targetCol: 123
@@ -32,6 +34,7 @@ test('toString() with multi-line messages', t => {
     message: 'Something funky happened\nand it was\non multiple lines',
     frames: [
       Object.assign(new StackFrame(), {
+        parseStatus: 'ok',
         targetUrl: 'https://example.com/app.js',
         targetLine: 765,
         targetCol: 123

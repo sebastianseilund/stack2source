@@ -38,3 +38,20 @@ test.cb('stack2source() in callback mode', t => {
     t.end()
   })
 })
+
+test('with truncated stack', async t => {
+  const raw = [
+    'Something funky happened',
+    '    at e (https://example.com/vendor.js:1:100)',
+    '    at https://examp',
+    '...'
+  ].join('\n')
+  const stack = await stack2source(raw)
+  t.is(
+    stack.toString(),
+    'Something funky happened\n' +
+      '    at each (webpack://lodash.js:111:11)\n' +
+      '    at https://examp\n' +
+      '...'
+  )
+})
