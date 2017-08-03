@@ -105,6 +105,7 @@ Currently only tested well with Chrome (V8). Issues/PRs for more support is enco
 - Whitelist which URLs (prefixes) are allowed to be fetched.
 - Set a limit of number of frames to parse (default to 100 fx).
 - Throttle sourcemap/js requests (to 10 at a time fx).
+- Decorator for sourceUrl. E.g. strip `webpack://` prefix.
 - Support for non-public sourcemaps. A way to transform the URL of the sourcemaps, or maybe even load them from disk (would only work in Node obviously).
 - More browser/environment coverage.
 
