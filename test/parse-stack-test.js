@@ -28,8 +28,8 @@ test('Chrome style stack', t => {
   const stack = parseStack(raw)
   t.is(stack.message, 'Something funky happened')
   t.is(stack.frames.length, 2)
-  t.is(stack.frames[0].name, undefined)
-  t.is(stack.frames[1].name, 'myFunction')
+  t.is(stack.frames[0].targetName, undefined)
+  t.is(stack.frames[1].targetName, 'myFunction')
 })
 
 test('With multi-line message', t => {
@@ -42,5 +42,5 @@ test('With multi-line message', t => {
   const stack = parseStack(raw)
   t.is(stack.message, 'Something funky happened\nover\nmany lines')
   t.is(stack.frames.length, 1)
-  t.is(stack.frames[0].name, 'myFunction')
+  t.is(stack.frames[0].targetName, 'myFunction')
 })
