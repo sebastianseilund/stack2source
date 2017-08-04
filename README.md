@@ -34,7 +34,7 @@ const inputStack = `Error: Something went wrong
     at error-client-source: Unhandled promise rejection`
 
 stack2source(inputStack, {
-    prefixWhitelist: [
+    urlWhitelist: [
       'https://my.domain.com/assets/'
     ]
   })
@@ -49,7 +49,7 @@ stack2source(inputStack, {
 
 `opts` is an object with the following keys:
 
-- _Options coming soon..._
+- `urlWhitelist`: Defines the URLs stack2source is allowed to access when fetching JS- and sourcemap files. Can either be an array of path prefixes, an array of regular expressions, or a mix of prefixes and regular expressions. To allow all URLs (not recommended) set it to just the string `'*'`.
 
 The result of `stack2source` is a `Stack` object. If `callback` is set and is a function, it will be invoked with the result. You can also omit `opts` and supply a callback function as the second argument. Otherwise a promise is returned, which resolves with the result.
 
@@ -96,13 +96,33 @@ Instance properties (TODO: Fill in):
 
 Formats the frame as a string and returns it. Used by `Stack.prototype.toString`.
 
+## Examples
+
+### Using regular expressions for `urlWhitelist`
+
+```js
+stack2source(inputStack, {
+    urlWhitelist: [
+      'https://my.domain.com/assets/',
+      /ok-file.js/
+    ]
+  })
+```
+
+### Allowing all URLs for `urlWhitelist`
+
+```js
+stack2source(inputStack, {
+    urlWhitelist: '*'
+  })
+```
+
 ## Browser/environment support
 
 Currently only tested well with Chrome (V8). Issues/PRs for more support is encouraged.
 
 ## Roadmap
 
-- Whitelist which URLs (prefixes) are allowed to be fetched.
 - Set a limit of number of frames to parse (default to 100 fx).
 - Throttle sourcemap/js requests (to 10 at a time fx).
 - Decorator for sourceUrl. E.g. strip `webpack://` prefix.

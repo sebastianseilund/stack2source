@@ -25,6 +25,12 @@ function setup() {
   setupJs('missing-sourcemap.js', 'missing-sourcemap.js.map')
   setup404('missing-sourcemap.js.map')
 
+  // With sourcemap on different host
+  setupJs(
+    'sourcemap-on-different-host.js',
+    'https://not-example.com/sourcemap-on-different-host.js.map'
+  )
+
   // JS file that does not exist
   setup404('does-not-exist.js')
 }
@@ -38,7 +44,10 @@ function setupJs(file, sourcemap) {
   const key = 'sourceMappingURL'
   let body = `var fake = '${file}'`
   if (sourcemap) {
-    body += `\n\n//# ${key}=${host}/${sourcemap}`
+    const absSourcemap = sourcemap.match(/^https?:\/\//)
+      ? sourcemap
+      : `${host}/${sourcemap}`
+    body += `\n\n//# ${key}=${absSourcemap}`
   }
   nock(host).persist().get(`/${file}`).reply(200, body)
 }
