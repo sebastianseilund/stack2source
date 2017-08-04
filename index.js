@@ -3,12 +3,12 @@ const fetchSourcemaps = require('./lib/fetch-sourcemaps')
 const translateFrames = require('./lib/translate-frames')
 
 module.exports = function(rawStack, opts, callback) {
-  opts = opts || {}
   if (typeof opts === 'function') {
     callback = opts
     opts = {}
   }
 
+  opts = opts || {}
   if (!opts.urlWhitelist) {
     return Promise.reject(
       'stack2source\'s `urlWhitelist` option is required. It\'s recommended to set it to an array with prefixes of all paths your JS- and sourcemap files exist on. Example: `urlWhitelist: [\'http://my.domain.com/assets/\']`. Or you can set it to \'*\' to allow all URLs.'
