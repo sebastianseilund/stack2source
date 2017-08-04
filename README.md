@@ -102,19 +102,19 @@ Formats the frame as a string and returns it. Used by `Stack.prototype.toString`
 
 ```js
 stack2source(inputStack, {
-    urlWhitelist: [
-      'https://my.domain.com/assets/',
-      /ok-file.js/
-    ]
-  })
+  urlWhitelist: [
+    'https://my.domain.com/assets/',
+    /ok-file.js/
+  ]
+})
 ```
 
 ### Allowing all URLs for `urlWhitelist`
 
 ```js
 stack2source(inputStack, {
-    urlWhitelist: '*'
-  })
+  urlWhitelist: '*'
+})
 ```
 
 ## Browser/environment support
