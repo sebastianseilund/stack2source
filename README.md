@@ -61,6 +61,7 @@ Instead of just returning a transformed string, we return an object, so the stat
 
 Instance properties:
 
+- `engine`: String. The engine that was detected and used to parse the stack.
 - `message`: String. The first line(s) of the input stack (the error message).
 - `frames`: An array of `StackFrame` objects representing each frame in the stack.
 
