@@ -78,3 +78,19 @@ test('parseStackFrame: Named frame', t => {
     })
   )
 })
+
+test('parseStackFrame: With prefix space', t => {
+  const raw = '    myFunction@https://example.com/app.js:11:222'
+  const frame = parseStackFrame(raw)
+  t.deepEqual(
+    frame,
+    Object.assign(new StackFrame(), {
+      parseStatus: 'ok',
+      raw,
+      targetName: 'myFunction',
+      targetUrl: 'https://example.com/app.js',
+      targetLine: 11,
+      targetCol: 222
+    })
+  )
+})
