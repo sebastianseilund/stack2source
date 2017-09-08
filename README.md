@@ -45,7 +45,7 @@ stack2source(inputStack, {
 
 ### `stack2source(input, [opts, callback])`
 
-`input` is the raw stack to be parsed (a string).
+`input` is the raw stack to be parsed (a string). Stack2source will detect which JavaScript engine produced the stack, and use an appropriate parser.
 
 `opts` is an object with the following keys:
 
@@ -68,6 +68,8 @@ Instance properties:
 #### `Stack.prototype.toString()`
 
 Formats the stack as a string and returns it. If you just want to parse a stack string to a sourcemapped string, this is what you'll want to use. See Quickstart.
+
+Currently always formats in V8-style. Even if the input stack was from Firefox fx.
 
 ### `StackFrame`
 
@@ -120,7 +122,21 @@ stack2source(inputStack, {
 
 ## Browser/environment support
 
-Currently only tested well with Chrome (V8). Issues/PRs for more support is encouraged.
+Tested with the following browsers/environments/engines:
+
+- V8 style (`    at <name> (<url>:<line>:<col>)`)
+  - Chrome
+  - Node.js
+  - Android Browser*
+  - Opera 15+*
+  - IE10+*
+- Firefox style (`<name>@<url>:<line>:<col>`)
+  - Firefox
+  - Safari
+
+* Needs verification
+
+Issues/PRs for more support is encouraged.
 
 ## Roadmap
 

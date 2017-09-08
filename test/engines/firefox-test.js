@@ -1,22 +1,21 @@
 import test from 'ava'
-import {parseStack, parseStackFrame} from '../../lib/engines/v8'
+import {parseStack, parseStackFrame} from '../../lib/engines/firefox'
 import StackFrame from '../../lib/stack-frame'
 
-test('parseStack: Single-line message', t => {
+test('parseStack', t => {
   const raw = [
-    'Something funky happened',
-    '    at https://example.com/vendor.js:11:222',
-    '    at myFunction (https://example.com/app.js:33:444)'
+    '@https://example.com/vendor.js:11:222',
+    'myFunction@https://example.com/app.js:33:444'
   ].join('\n')
   const stack = parseStack(raw)
-  t.is(stack.engine, 'v8')
-  t.is(stack.message, 'Something funky happened')
+  t.is(stack.engine, 'firefox')
+  t.is(stack.message, undefined)
   t.is(stack.frames.length, 2)
   t.deepEqual(
     stack.frames[0],
     Object.assign(new StackFrame(), {
       parseStatus: 'ok',
-      raw: '    at https://example.com/vendor.js:11:222',
+      raw: '@https://example.com/vendor.js:11:222',
       targetName: undefined,
       targetUrl: 'https://example.com/vendor.js',
       targetLine: 11,
@@ -27,26 +26,13 @@ test('parseStack: Single-line message', t => {
     stack.frames[1],
     Object.assign(new StackFrame(), {
       parseStatus: 'ok',
-      raw: '    at myFunction (https://example.com/app.js:33:444)',
+      raw: 'myFunction@https://example.com/app.js:33:444',
       targetName: 'myFunction',
       targetUrl: 'https://example.com/app.js',
       targetLine: 33,
       targetCol: 444
     })
   )
-})
-
-test('parseStack: Multi-line message', t => {
-  const raw = [
-    'Something funky happened',
-    'over',
-    'many lines',
-    '    at myFunction (https://example.com/app.js:33:444)'
-  ].join('\n')
-  const stack = parseStack(raw)
-  t.is(stack.message, 'Something funky happened\nover\nmany lines')
-  t.is(stack.frames.length, 1)
-  t.is(stack.frames[0].targetName, 'myFunction')
 })
 
 test('parseStackFrame: Non-understood frame', t => {
@@ -62,7 +48,7 @@ test('parseStackFrame: Non-understood frame', t => {
 })
 
 test('parseStackFrame: Unnamed frame', t => {
-  const raw = '    at https://example.com/app.js:11:222'
+  const raw = '@https://example.com/app.js:11:222'
   const frame = parseStackFrame(raw)
   t.deepEqual(
     frame,
@@ -78,7 +64,7 @@ test('parseStackFrame: Unnamed frame', t => {
 })
 
 test('parseStackFrame: Named frame', t => {
-  const raw = '    at myFunction (https://example.com/app.js:11:222)'
+  const raw = 'myFunction@https://example.com/app.js:11:222'
   const frame = parseStackFrame(raw)
   t.deepEqual(
     frame,

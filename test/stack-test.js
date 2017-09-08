@@ -49,3 +49,21 @@ test('toString() with multi-line messages', t => {
       '    at https://example.com/app.js:765:123'
   )
 })
+
+test('toString() when lacking message', t => {
+  const stack = Object.assign(new Stack(), {
+    message: undefined,
+    frames: [
+      Object.assign(new StackFrame(), {
+        parseStatus: 'ok',
+        targetUrl: 'https://example.com/app.js',
+        targetLine: 765,
+        targetCol: 123
+      })
+    ]
+  })
+  t.is(
+    stack.toString(),
+    '(no message)\n' + '    at https://example.com/app.js:765:123'
+  )
+})

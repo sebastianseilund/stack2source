@@ -29,4 +29,19 @@ test('V8 style stack', t => {
   t.is(stack.engine, 'v8')
   t.is(stack.message, 'Something funky happened')
   t.is(stack.frames.length, 2)
+  t.is(stack.frames[0].name, undefined)
+  t.is(stack.frames[1].name, 'myFunction')
+})
+
+test('Firefox style stack', t => {
+  const raw = [
+    '@https://example.com/vendor.js:11:222',
+    'myFunction@https://example.com/app.js:33:444'
+  ].join('\n')
+  const stack = parseStack(raw)
+  t.is(stack.engine, 'firefox')
+  t.is(stack.message, undefined)
+  t.is(stack.frames.length, 2)
+  t.is(stack.frames[0].name, undefined)
+  t.is(stack.frames[1].name, 'myFunction')
 })
