@@ -3,10 +3,7 @@
   "version": "0.5.1",
   "description": "Maps JavaScript stack traces back to source using sourcemaps both in browsers and Node.",
   "main": "index.js",
-  "files": [
-    "lib/",
-    "index.js"
-  ],
+  "files": ["lib/", "index.js"],
   "scripts": {
     "test": "./node_modules/.bin/ava"
   },
@@ -14,13 +11,7 @@
     "type": "git",
     "url": "git://github.com/sebastianseilund/stack2source.git"
   },
-  "keywords": [
-    "sourcemap",
-    "stack",
-    "trace",
-    "stacktrace",
-    "error"
-  ],
+  "keywords": ["sourcemap", "stack", "trace", "stacktrace", "error"],
   "author": "Sebastian Seilund <sebastian@seilund.com>",
   "license": "MIT",
   "bugs": {
@@ -29,8 +20,8 @@
   "homepage": "https://github.com/sebastianseilund/stack2source#readme",
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
-    "source-map": "^0.5.6",
-    "whatwg-url": "^6.1.0"
+    "source-map": "^0.6.1",
+    "whatwg-url": "^6.3.0"
   },
   "devDependencies": {
     "ava": "^0.21.0",
