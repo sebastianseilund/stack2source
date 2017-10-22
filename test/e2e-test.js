@@ -84,3 +84,29 @@ test('with non-whitelisted urls', async t => {
       '    at e (https://not-example.com/vendor.js:1:100)'
   )
 })
+
+test('with too large input string', async t => {
+  // Make a string consisting of 10 chars per line (including newline)
+  // Make it have 11 lines so it will be truncated
+  const lines = ['123456789']
+  for (let i = 0; i < 10; i++) {
+    lines.push('    at 89')
+  }
+  const raw = lines.join('\n')
+
+  // Take 3 full lines, one line of 8 chars and then the ellipsis (30 chars)
+  const maxStackLength = 3 * 10 + 1 * 8 + 30
+  const stack = await stack2source(raw, {
+    urlWhitelist: '*',
+    maxStackLength
+  })
+
+  const expected = [
+    '123456789',
+    '    at 89',
+    '    at 89',
+    '    at 8...(truncated by stack2source)'
+  ].join('\n')
+  t.is(expected.length, maxStackLength)
+  t.is(stack.toString(), expected)
+})

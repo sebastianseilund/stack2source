@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Added
 
+- Added `opts.maxStackLength` (defaults to `10000`) to help guard against malicious input stacks.
+
 ### Changed
 
 ### Removed

@@ -50,6 +50,7 @@ stack2source(inputStack, {
 `opts` is an object with the following keys:
 
 - `urlWhitelist`: Defines the URLs stack2source is allowed to access when fetching JS- and sourcemap files. Can either be an array of path prefixes, an array of regular expressions, or a mix of prefixes and regular expressions. To allow all URLs (not recommended) set it to just the string `'*'`.
+- `maxStackLength`: Sets an upper limit to the length of the `input` string argument. Will truncate `input` to this length if necessary. Defaults to `10000`.
 
 The result of `stack2source` is a `Stack` object. If `callback` is set and is a function, it will be invoked with the result. You can also omit `opts` and supply a callback function as the second argument. Otherwise a promise is returned, which resolves with the result.
 
@@ -142,7 +143,6 @@ Issues/PRs for more support is encouraged.
 - Resource usage limitation
   - Limit stack input length. +check that it's a string
   - Set a limit of number of unique JS URLs to fetch
-  - Throttle sourcemap/js requests (to 10 at a time fx).
 - Decorator for sourceUrl. E.g. strip `webpack://` prefix.
 - Support for non-public sourcemaps. A way to transform the URL of the sourcemaps, or maybe even load them from disk (would only work in Node obviously).
 - More browser/environment coverage.
