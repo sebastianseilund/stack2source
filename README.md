@@ -141,9 +141,6 @@ Issues/PRs for more support is encouraged.
 
 ## Roadmap
 
-- Resource usage limitation
-  - Limit stack input length. +check that it's a string
-  - Set a limit of number of unique JS URLs to fetch
 - Decorator for sourceUrl. E.g. strip `webpack://` prefix.
 - Support for non-public sourcemaps. A way to transform the URL of the sourcemaps, or maybe even load them from disk (would only work in Node obviously).
 - More browser/environment coverage.
