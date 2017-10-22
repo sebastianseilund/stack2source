@@ -51,6 +51,7 @@ stack2source(inputStack, {
 
 - `urlWhitelist`: Defines the URLs stack2source is allowed to access when fetching JS- and sourcemap files. Can either be an array of path prefixes, an array of regular expressions, or a mix of prefixes and regular expressions. To allow all URLs (not recommended) set it to just the string `'*'`.
 - `maxStackLength`: Sets an upper limit to the length of the `input` string argument. Will truncate `input` to this length if necessary. Defaults to `10000`.
+- `maxUrls`: Sets an upper limit to the number of unique JS URLs that will be loaded. If the number is exceeded, the remaining frames will simply not be translated, but will have `sourcemapStatus = 'max-urls-exceeded'`. Defaults to `10`.
 
 The result of `stack2source` is a `Stack` object. If `callback` is set and is a function, it will be invoked with the result. You can also omit `opts` and supply a callback function as the second argument. Otherwise a promise is returned, which resolves with the result.
 
@@ -70,7 +71,7 @@ Instance properties:
 
 Formats the stack as a string and returns it. If you just want to parse a stack string to a sourcemapped string, this is what you'll want to use. See Quickstart.
 
-Currently always formats in V8-style. Even if the input stack was from Firefox fx.
+Currently always formats in V8-style. Even if the input stack was from e.g. Firefox.
 
 ### `StackFrame`
 

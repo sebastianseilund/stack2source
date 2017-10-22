@@ -18,6 +18,10 @@ function setup() {
     [2, 200, 'helpers.js', undefined, 222, 22]
   ])
 
+  // A third one with working sourcemap
+  setupJs('common.js', 'common.js.map')
+  setupSourcemap('common.js', [[1, 100, 'util.js', 'usefulHelper', 111, 11]])
+
   // Without a sourcemap
   setupJs('no-sourcemap.js', null)
 

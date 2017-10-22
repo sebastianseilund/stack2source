@@ -5,7 +5,7 @@ import {setup, teardown} from './helpers/fake-sourcemaps'
 test.before(setup)
 test.after(teardown)
 
-test('stack2source()', async t => {
+test('stack2source() in promise mode', async t => {
   const raw = [
     'Something funky happened',
     '    at e (https://example.com/vendor.js:1:100)',
@@ -109,4 +109,28 @@ test('with too large input string', async t => {
   ].join('\n')
   t.is(expected.length, maxStackLength)
   t.is(stack.toString(), expected)
+})
+
+test('when maxUrls is exceeded', async t => {
+  const raw = [
+    'Something funky happened',
+    '    at e (https://example.com/vendor.js:1:100)',
+    '    at https://example.com/common.js:1:100',
+    '    at https://example.com/app.js:2:200',
+    '    at e (https://example.com/vendor.js:2:200)'
+  ].join('\n')
+  const stack = await stack2source(raw, {
+    urlWhitelist: ['https://example.com/'],
+    maxUrls: 2
+  })
+  t.is(
+    stack.toString(),
+    [
+      'Something funky happened',
+      '    at each (webpack://lodash.js:111:11)',
+      '    at usefulHelper (webpack://util.js:111:11)',
+      '    at https://example.com/app.js:2:200',
+      '    at format (webpack://moment.js:222:22)'
+    ].join('\n')
+  )
 })
