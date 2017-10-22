@@ -6,7 +6,13 @@ import {setup, teardown} from './helpers/fake-sourcemaps'
 test.before(setup)
 test.after(teardown)
 
-async function frameMacro(t, rawFrame, expectedStatus, opts = {}) {
+async function frameMacro(
+  t,
+  rawFrame,
+  expectedStatus,
+  opts = {},
+  frameCallback
+) {
   const raw = ['Something funky happened', rawFrame].join('\n')
   const stack = parseStack(raw)
 
@@ -14,18 +20,42 @@ async function frameMacro(t, rawFrame, expectedStatus, opts = {}) {
 
   const frame = stack.frames[0]
   t.is(frame.sourcemapStatus, expectedStatus)
-  if (expectedStatus === 'ok') {
-    t.truthy(frame.sourcemap)
-  } else {
-    t.falsy(frame.sourcemap)
+  if (frameCallback) {
+    frameCallback(t, frame)
   }
 }
 
-async function urlMacro(t, targetUrl, expectedStatus, opts) {
-  await frameMacro(t, `    at ${targetUrl}:1:100`, expectedStatus, opts)
+async function urlMacro(t, targetUrl, expectedStatus, opts, frameCallback) {
+  await frameMacro(
+    t,
+    `    at ${targetUrl}:1:100`,
+    expectedStatus,
+    opts,
+    frameCallback
+  )
 }
 
-test('js and sourcemap exists', urlMacro, 'https://example.com/vendor.js', 'ok')
+test(
+  'js and sourcemap exists',
+  urlMacro,
+  'https://example.com/vendor.js',
+  'ok',
+  {},
+  (t, frame) => {
+    t.is(frame.translateStatus, 'ok')
+  }
+)
+
+test(
+  'js and sourcemap exists, but code location is bad',
+  frameMacro,
+  '    at https://example.com/vendor.js:0:0',
+  'ok',
+  {},
+  (t, frame) => {
+    t.is(frame.translateStatus, 'not-found-in-sourcemap')
+  }
+)
 
 test(
   'js has no sourcemap',
