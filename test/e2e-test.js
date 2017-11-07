@@ -134,3 +134,20 @@ test('when maxUrls is exceeded', async t => {
     ].join('\n')
   )
 })
+
+test('with Edge style stack (3 spaced before at)', async t => {
+  const raw = [
+    'Something funky happened',
+    '   at e (https://example.com/vendor.js:1:100)',
+    '   at https://example.com/app.js:2:200'
+  ].join('\n')
+  const stack = await stack2source(raw, {
+    urlWhitelist: ['https://example.com/']
+  })
+  t.is(
+    stack.toString(),
+    'Something funky happened\n' +
+      '    at each (webpack://lodash.js:111:11)\n' +
+      '    at webpack://helpers.js:222:22'
+  )
+})

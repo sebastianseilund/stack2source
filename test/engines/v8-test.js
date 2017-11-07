@@ -92,3 +92,19 @@ test('parseStackFrame: Named frame', t => {
     })
   )
 })
+
+test('parseStackFrame: only 3 spaces (Edge style)', t => {
+  const raw = '   at myFunction (https://example.com/app.js:11:222)'
+  const frame = parseStackFrame(raw)
+  t.deepEqual(
+    frame,
+    Object.assign(new StackFrame(), {
+      parseStatus: 'ok',
+      raw,
+      targetName: 'myFunction',
+      targetUrl: 'https://example.com/app.js',
+      targetLine: 11,
+      targetCol: 222
+    })
+  )
+})
